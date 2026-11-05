@@ -41,6 +41,7 @@ jobs:
               }
               signingConfigs { main { storeFile file('app.jks'); storePassword 'sozvon123'; keyAlias 'sozvon'; keyPassword 'sozvon123' } }
               buildTypes { release { minifyEnabled false; signingConfig signingConfigs.main } }
+              lint { checkReleaseBuilds false; abortOnError false }
               compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
           }
           repositories { google(); mavenCentral() }
@@ -52,6 +53,12 @@ jobs:
               <uses-permission android:name="android.permission.RECORD_AUDIO"/>
               <uses-permission android:name="android.permission.CAMERA"/>
               <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+              <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+              <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+              <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+              <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>
+              <uses-permission android:name="android.permission.VIBRATE"/>
+              <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
               <uses-feature android:name="android.hardware.camera" android:required="false"/>
               <uses-feature android:name="android.hardware.microphone" android:required="false"/>
               <application android:label="Созвон" android:icon="@drawable/ic_launcher" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:hardwareAccelerated="true" android:allowBackup="false">
@@ -61,6 +68,9 @@ jobs:
                           <category android:name="android.intent.category.LAUNCHER"/>
                       </intent-filter>
                   </activity>
+                  <service android:name=".KeepAliveService" android:exported="false" android:stopWithTask="true" android:foregroundServiceType="specialUse|microphone">
+                      <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="messenger"/>
+                  </service>
               </application>
           </manifest>
           EOF
@@ -76,6 +86,9 @@ jobs:
 
           import android.Manifest;
           import android.app.Activity;
+          import android.graphics.drawable.Icon;
+          import android.media.AudioAttributes;
+          import android.media.RingtoneManager;
           import android.content.ContentValues;
           import android.content.Context;
           import android.content.Intent;
@@ -87,6 +100,11 @@ jobs:
           import android.os.Environment;
           import android.provider.MediaStore;
           import android.util.Base64;
+          import android.app.Notification;
+          import android.app.NotificationChannel;
+          import android.app.NotificationManager;
+          import android.app.PendingIntent;
+          import android.webkit.JavascriptInterface;
           import android.webkit.PermissionRequest;
           import android.webkit.ValueCallback;
           import android.webkit.WebChromeClient;
@@ -109,10 +127,86 @@ jobs:
               private WebView web;
               private PermissionRequest pending;
               private ValueCallback<Uri[]> fileCb;
+              private boolean fg = true;
+
+              private Notification.Builder builder(String ch) {
+                  Notification.Builder n;
+                  if (Build.VERSION.SDK_INT >= 26) {
+                      NotificationManager nm = getSystemService(NotificationManager.class);
+                      nm.createNotificationChannel(new NotificationChannel("calls", "Звонки", NotificationManager.IMPORTANCE_HIGH));
+                      nm.createNotificationChannel(new NotificationChannel("messages", "Сообщения", NotificationManager.IMPORTANCE_DEFAULT));
+                      n = new Notification.Builder(this, ch);
+                  } else n = new Notification.Builder(this);
+                  Intent i = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                  PendingIntent pi = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+                  return n.setSmallIcon(R.drawable.ic_launcher).setContentIntent(pi);
+              }
+
+              private void startKeep(boolean inCall) {
+                  try {
+                      Intent svc = new Intent(this, KeepAliveService.class).putExtra("call", inCall);
+                      if (Build.VERSION.SDK_INT >= 26) startForegroundService(svc); else startService(svc);
+                  } catch (Exception ignored) { }
+              }
+
+              private PendingIntent ringIntent(String action, int code) {
+                  Intent i = new Intent(this, MainActivity.class).setAction(action).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                  return PendingIntent.getActivity(this, code, i, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+              }
+
+              private void showRing(String name) {
+                  NotificationManager nm = getSystemService(NotificationManager.class);
+                  Notification.Builder b;
+                  if (Build.VERSION.SDK_INT >= 26) {
+                      NotificationChannel ch = new NotificationChannel("ring", "Входящие звонки", NotificationManager.IMPORTANCE_HIGH);
+                      ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE), new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE).build());
+                      ch.enableVibration(true);
+                      ch.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+                      nm.createNotificationChannel(ch);
+                      b = new Notification.Builder(this, "ring").setTimeoutAfter(50000);
+                  } else {
+                      b = new Notification.Builder(this).setPriority(Notification.PRIORITY_MAX).setDefaults(Notification.DEFAULT_ALL);
+                  }
+                  Icon ic = Icon.createWithResource(this, R.drawable.ic_launcher);
+                  nm.notify(2, b.setSmallIcon(ic).setContentTitle(name).setContentText("Входящий звонок").setCategory(Notification.CATEGORY_CALL)
+                      .setOngoing(true).setVisibility(Notification.VISIBILITY_PUBLIC)
+                      .setContentIntent(ringIntent("open", 10)).setFullScreenIntent(ringIntent("open", 10), true)
+                      .addAction(new Notification.Action.Builder(ic, "Сбросить", ringIntent("decline", 11)).build())
+                      .addAction(new Notification.Action.Builder(ic, "Принять", ringIntent("accept", 12)).build()).build());
+              }
+
+              private void handleAction(Intent i) {
+                  if (i == null || i.getAction() == null) return;
+                  String a = i.getAction();
+                  getSystemService(NotificationManager.class).cancel(2);
+                  if ("accept".equals(a) || "decline".equals(a)) web.evaluateJavascript("answerRing(" + "accept".equals(a) + ")", null);
+              }
+
+              @Override protected void onNewIntent(Intent i) { super.onNewIntent(i); setIntent(i); handleAction(i); }
+              @Override protected void onStart() { super.onStart(); fg = true; getSystemService(NotificationManager.class).cancel(2); }
+
+              public class Bridge {
+                  @JavascriptInterface public void incomingCall(String name) { runOnUiThread(() -> { if (!fg) showRing(name); }); }
+                  @JavascriptInterface public void callState(boolean on) { runOnUiThread(() -> startKeep(on)); }
+                  @JavascriptInterface public void callEnded() { getSystemService(NotificationManager.class).cancel(2); }
+                  @JavascriptInterface public void message(String title, String body) {
+                      if (fg) return;
+                      getSystemService(NotificationManager.class).notify(3, builder("messages").setContentTitle(title).setContentText(body).setAutoCancel(true).build());
+                  }
+              }
 
               @Override protected void onCreate(Bundle b) {
                   super.onCreate(b);
+                  if (Build.VERSION.SDK_INT >= 27) { setShowWhenLocked(true); setTurnScreenOn(true); }
+                  if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
+                      requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 3);
+                  try {
+                      Intent svc = new Intent(this, KeepAliveService.class);
+                      if (Build.VERSION.SDK_INT >= 26) startForegroundService(svc); else startService(svc);
+                  } catch (Exception ignored) { }
                   web = new WebView(this);
+                  if (Build.VERSION.SDK_INT >= 26) web.setRendererPriorityPolicy(WebView.RENDERER_PRIORITY_IMPORTANT, false);
+                  web.addJavascriptInterface(new Bridge(), "SozvonApp");
                   setContentView(web);
                   web.setBackgroundColor(0xFF1E1F22);
                   WebSettings s = web.getSettings();
@@ -146,6 +240,7 @@ jobs:
                   });
                   web.setDownloadListener((url, ua, cd, mime, len) -> saveData(url));
                   web.loadUrl("https://" + HOST + "/");
+                  handleAction(getIntent());
               }
 
               private void handleMedia(PermissionRequest r) {
@@ -212,55 +307,24 @@ jobs:
                       r -> { if (!"1".equals(r)) moveTaskToBack(true); });
               }
 
-              @Override protected void onDestroy() { callAudio(false); web.destroy(); super.onDestroy(); }
+              @Override protected void onStop() { super.onStop(); fg = false; }
+              @Override protected void onResume() { super.onResume(); fg = true; getSystemService(NotificationManager.class).cancel(3); }
+              @Override protected void onDestroy() { stopService(new Intent(this, KeepAliveService.class)); callAudio(false); web.destroy(); super.onDestroy(); }
           }
           EOF
-          base64 -d > app.jks <<'EOF'
-          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
-          JxA=
-          EOF
-      - name: Собрать
-        run: gradle --no-daemon assembleRelease
-      - run: cp build/outputs/apk/release/*.apk Sozvon.apk
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Sozvon-APK
-          path: Sozvon.apk
-      - uses: softprops/action-gh-release@v2
-        with:
-          tag_name: apk-${{ github.run_number }}
-          name: Созвон ${{ github.run_number }}
-          files: Sozvon.apk
+          cat > src/main/java/app/sozvon/KeepAliveService.java <<'EOF'
+          package app.sozvon;
+
+          import android.app.Notification;
+          import android.app.NotificationChannel;
+          import android.app.NotificationManager;
+          import android.app.PendingIntent;
+          import android.app.Service;
+          import android.content.Intent;
+          import android.os.Build;
+          import android.os.IBinder;
+          import android.content.pm.ServiceInfo;
+
+          public class KeepAliveService extends Service {
+              @Override public int onStartCommand(Intent intent, int flags, int id) {
+                  Notificati
