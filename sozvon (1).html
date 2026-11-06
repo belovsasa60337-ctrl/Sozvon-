@@ -4,16 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
 <title>Созвон</title>
-<meta name="theme-color" content="#1e1f22">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#000000">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-:root{--bg0:#1e1f22;--bg1:#2b2d31;--bg2:#313338;--bg3:#383a40;--bg4:#404249;--hov:#35373c;--txt:#dbdee1;--mut:#949ba4;--head:#f2f3f5;--acc:#5865f2;--acc2:#4752c4;--ok:#23a55a;--idle:#f0b232;--dnd:#f23f43;--off:#80848e;--line:#ffffff0f;--ment:#5865f226;--shadow:0 8px 24px #0006}
-[data-theme=light]{--bg0:#e3e5e8;--bg1:#f2f3f5;--bg2:#fff;--bg3:#ebedef;--bg4:#d7d9dc;--hov:#eef0f2;--txt:#2e3338;--mut:#5c5e66;--head:#060607;--line:#0000001a;--shadow:0 8px 24px #0002}
+:root{--bg0:#000;--bg1:#0c0c0c;--bg2:#111;--bg3:#1c1c1c;--bg4:#2a2a2a;--hov:#181818;--txt:#e6e6e6;--mut:#8a8a8a;--head:#fff;--acc:#fff;--acc2:#d4d4d4;--ok:#3fb950;--idle:#d29922;--dnd:#e5484d;--off:#6b6b6b;--line:#ffffff14;--ment:#ffffff14;--inv:#000;--shadow:0 8px 24px #0006}
+[data-theme=light]{--bg0:#f2f2f2;--bg1:#fafafa;--bg2:#fff;--bg3:#f0f0f0;--bg4:#dedede;--hov:#f3f3f3;--txt:#1a1a1a;--mut:#6b6b6b;--head:#000;--acc:#000;--acc2:#333;--inv:#fff;--ment:#0000000d;--line:#00000014;--line:#0000001a;--shadow:0 8px 24px #0002}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
-body{background:var(--bg0);color:var(--txt);font:15px/1.4 "gg sans","Noto Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow:hidden;overscroll-behavior:none}
+body{background:var(--bg0);color:var(--txt);font:15px/1.45 Manrope,"Nunito Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow:hidden;overscroll-behavior:none}
 button,input,textarea,select{font:inherit;color:inherit}
 button{background:none;border:0;cursor:pointer;padding:0}
 a{color:#00a8fc;text-decoration:none}a:hover{text-decoration:underline}
@@ -26,7 +27,7 @@ input.f:focus,textarea.f:focus{border-color:var(--acc)}
 .btn{background:var(--acc);color:#fff;border-radius:4px;padding:9px 16px;font-weight:600;min-height:38px}
 .btn:hover{background:var(--acc2)}.btn.sec{background:var(--bg4);color:var(--txt)}.btn.red{background:var(--dnd)}.btn.grn{background:var(--ok)}.btn[disabled]{opacity:.5;cursor:default}
 /* auth */
-#auth{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 20% 15%,#5865f2,transparent 45%),radial-gradient(circle at 85% 90%,#3b2a9e,transparent 50%),var(--bg0);padding:16px;z-index:50;overflow:auto}
+#auth{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg0);padding:16px;z-index:50;overflow:auto}
 .card{background:var(--bg2);border-radius:8px;padding:28px;width:100%;max-width:440px;box-shadow:var(--shadow)}
 .card h1{text-align:center;margin:0 0 4px;font-size:24px;color:var(--head)}.card p.s{text-align:center;color:var(--mut);margin:0 0 14px}
 .err{color:#fa777c;font-size:13px;min-height:18px;margin-top:8px}
@@ -136,6 +137,7 @@ blockquote{margin:2px 0;border-left:4px solid var(--bg4);padding-left:8px}
 .tile .av{width:72px;height:72px;font-size:28px}
 .tile .lab{position:absolute;left:8px;bottom:8px;background:#000a;border-radius:4px;padding:2px 7px;font-size:13px;display:flex;gap:5px;align-items:center;max-width:calc(100% - 16px);white-space:nowrap;overflow:hidden}
 .tile .st{position:absolute;right:8px;top:8px;background:#000a;font-size:11px;padding:2px 6px;border-radius:4px}
+#callSt{text-align:center;padding:8px 10px 0;font-weight:600;font-size:14px;color:var(--idle);flex:none}#callSt.ok{color:var(--ok)}#callSt.bad{color:#ff8a8d}
 #ctl{display:flex;justify-content:center;gap:10px;padding:10px;flex:none;flex-wrap:wrap}
 .cb{width:50px;height:50px;border-radius:50%;background:#2b2d31;color:#fff;display:flex;align-items:center;justify-content:center}.cb:hover{background:#404249}.cb.on{background:#fff;color:#000}.cb.off{background:var(--dnd)}.cb.end{background:var(--dnd);width:64px;border-radius:25px}
 #joinScr{flex:1;display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;text-align:center;padding:20px}
@@ -180,13 +182,54 @@ blockquote{margin:2px 0;border-left:4px solid var(--bg4);padding-left:8px}
   #panel{height:60px;padding-bottom:env(safe-area-inset-bottom);box-sizing:content-box}
 }
 @media(max-width:350px){.mtabs .tab{font-size:12px!important;padding:8px 2px!important}}
+
+/* ---- облик «Созвон»: чёрно-белый ---- */
+body{letter-spacing:.005em}
+.card{border-radius:14px;border:1px solid var(--line)}
+input.f,textarea.f,select.f{border-radius:10px;background:var(--bg1);border:1px solid var(--line)}
+input.f:focus,textarea.f:focus{border-color:var(--mut)}
+.btn{border-radius:10px;font-weight:600}
+.btn:not(.sec):not(.red):not(.grn){background:var(--acc);color:var(--inv)}.btn:not(.sec):not(.red):not(.grn):hover{background:var(--acc2)}
+a{color:var(--head);text-decoration:underline}
+@media(min-width:769px){#app{padding:8px;gap:8px}#nav{gap:8px}#side,#main{border-radius:12px;overflow:hidden;border:1px solid var(--line)}#rail{background:transparent;padding:4px 0}}
+.ri .ic{border-radius:12px;background:var(--bg2);border:1px solid var(--line)}
+.ri:hover .ic,.ri.on .ic{border-radius:12px;background:var(--acc);color:var(--inv);border-color:transparent}
+.ri.add .ic{color:var(--txt)}.ri.add:hover .ic{background:var(--acc);color:var(--inv)}
+.ri .pill{display:none}.ri.unread .ic{box-shadow:0 0 0 2px var(--mut)}
+.rsep{width:28px;height:1px;background:var(--line)}
+#sideHead,#head{box-shadow:none;border-bottom:1px solid var(--line)}
+.ch{border-radius:8px}.ch.on{background:var(--bg3);color:var(--head)}
+.cat{letter-spacing:.08em;font-size:11px}
+#panel{background:var(--bg1)!important;border-top:1px solid var(--line)}
+.av{background:var(--bg4)!important;color:var(--head)}
+.m .av{border-radius:50%}
+.m .tx{display:inline-block;max-width:100%;background:var(--bg3);padding:7px 12px;border-radius:4px 14px 14px 14px;margin-top:2px}
+.m.own .tx{background:var(--acc);color:var(--inv)}
+.m.own .tx .mn{color:var(--inv);background:#8883}.m.own .tx a{color:var(--inv)}
+.m.own .ed{color:inherit;opacity:.6}
+.tx .mn{background:var(--bg4);color:var(--head)}
+.m.ment{background:var(--ment);box-shadow:inset 2px 0 var(--head)}
+.m:hover{background:transparent}.m .tools{border-radius:8px}
+.rx button.me{border-color:var(--mut)}
+#compIn{border-radius:20px;border:1px solid var(--line);background:var(--bg1)}
+#compBar{border-radius:12px 12px 0 0}
+#bSend{background:var(--acc);color:var(--inv);border-radius:50%;width:36px;height:36px;margin:3px}
+.tab{border-radius:16px}.tab.on{background:var(--bg3);color:var(--head)}.tab.add{background:var(--acc);color:var(--inv)}.tab.add.on{background:var(--bg3);color:var(--head)}
+.fr{border-top:0;border-radius:10px;margin-bottom:4px;background:var(--bg1)}
+.mod{border-radius:14px;border:1px solid var(--line)}
+#stage{background:#000}
+.tile{background:#141414;border-radius:12px;border:1px solid #ffffff14;outline-color:#fff}
+.cb{background:#1f1f1f}.cb.on{background:#fff;color:#000}
+.toast{border-radius:10px;background:#141414;border:1px solid var(--line)}
+.day:before,.day:after{background:var(--line)}
+.bdg{background:var(--head);color:var(--inv);border-color:var(--bg0)}.ch .cnt{background:var(--head);color:var(--inv)}
 </style>
 </head>
 <body data-pane="nav">
 <div id="auth">
-  <form class="card" id="authF" autocomplete="on">
+  <form class="card" id="authF" autocomplete="on" novalidate>
     <h1 id="aT">С возвращением!</h1><p class="s" id="aS">Рады видеть вас снова</p>
-    <label class="lbl" for="aU">Имя пользователя</label><input class="f" id="aU" autocomplete="username" required minlength="2" maxlength="32" autocapitalize="none">
+    <label class="lbl" for="aU" id="aUl">Юзернейм</label><input class="f" id="aU" autocomplete="username" required minlength="2" maxlength="32" autocapitalize="none">
     <label class="lbl" for="aP">Пароль</label><input class="f" id="aP" type="password" autocomplete="current-password" required minlength="6">
     <label class="lbl" for="aPh">Номер телефона</label><input class="f" id="aPh" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required>
     <div class="err" id="aE" role="alert"></div>
@@ -206,7 +249,7 @@ blockquote{margin:2px 0;border-left:4px solid var(--bg4);padding-left:8px}
     <div id="body">
       <div id="center">
         <div id="home" class="hidden"></div>
-        <div id="stage" class="hidden"><div id="tiles"></div><div id="ctl"></div></div>
+        <div id="stage" class="hidden"><div id="callSt" role="status"></div><div id="tiles"></div><div id="ctl"></div></div>
         <div id="joinScr" class="hidden"></div>
         <div id="msgs" role="log"></div>
         <div id="typing"></div>
@@ -341,7 +384,7 @@ async function sendPresence(){const s=A.status==='invisible'?'off':A.status;mux.
 async function ensureConv(id,keyRaw,info){if(S.convs[id])return S.convs[id];const k=await aes(keyRaw),h=await hx('c'+b64(keyRaw)),c={id,h,key:k,...info,msgs:new Map,maxSeq:0,typing:{},voice:{},cb:null};
   if(S.convs[id])return S.convs[id];S.convs[id]=c;
   try{const cached=await idb.get(A.uid+':'+id);if(cached)for(const m of cached){c.msgs.set(m.id,m);c.maxSeq=Math.max(c.maxSeq,m.seq||0)}}catch{}
-  c.cb=(t,p)=>convIn(c,t,p);mux.sub(T.conv(h)+'/#',c.cb);rerender();return c}
+  c.cb=(t,p,ret)=>convIn(c,t,p,ret);mux.sub(T.conv(h)+'/#',c.cb);rerender();return c}
 function dropConv(id){const c=S.convs[id];if(!c)return;mux.unsub(T.conv(c.h)+'/#',c.cb);if(call&&call.c===c)leaveCall();delete S.convs[id]}
 const idb={db:null,open(){return this.db||(this.db=new Promise((res,rej)=>{const r=indexedDB.open('sozvon',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}))},
   async get(k){const d=await this.open();return new Promise(res=>{const q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>res(null)})},
@@ -349,12 +392,12 @@ const idb={db:null,open(){return this.db||(this.db=new Promise((res,rej)=>{const
 const cacheT={};
 function cacheConv(c){clearTimeout(cacheT[c.id]);cacheT[c.id]=setTimeout(()=>{const a=[...c.msgs.values()].filter(m=>!m.st).sort(byT).slice(-300);idb.set(A.uid+':'+c.id,a).catch(()=>{})},1500)}
 const byT=(a,b)=>a.t-b.t||(a.id<b.id?-1:1);
-async function convIn(c,topic,p){const sub=topic.slice(T.conv(c.h).length+1).split('/');if(!p){if(sub[0]==='v'){delete c.voice[sub[1]];voiceChanged(c)}return}
+async function convIn(c,topic,p,ret){const sub=topic.slice(T.conv(c.h).length+1).split('/');if(!p){if(sub[0]==='v'){delete c.voice[sub[1]];voiceChanged(c)}return}
   const o=await dec(c.key,p);if(!o)return;
   if(sub[0]==='m')mergeMsg(c,o);
   else if(sub[0]==='t'){if(o.a!==A.uid&&typeof o.a==='string'){c.typing[o.a]=Date.now();renderTyping();setTimeout(renderTyping,5100)}}
-  else if(sub[0]==='v'){const u=sub[1];if(o.gone)delete c.voice[u];else c.voice[u]={...o,seen:Date.now()};ensureUser(u);voiceChanged(c)}
-  else if(sub[0]==='ring')onRing(c,o)}
+  else if(sub[0]==='v'){const u=sub[1];if(o.gone)delete c.voice[u];else c.voice[u]={...o,seen:ret?Math.min(Date.now(),o.t||0):Date.now()};ensureUser(u);voiceChanged(c)}
+  else if(sub[0]==='ring')onRing(c,o,ret)}
 function mergeMsg(c,m){if(!m||typeof m.id!=='string'||typeof m.a!=='string'||typeof m.t!=='number')return;if(c.dm&&m.a!==A.uid&&m.a!==c.dm)return;if(c.dm&&A.friends[c.dm]?.state==='blocked')return;
   const old=c.msgs.get(m.id);if(old&&(m.v||0)<=(old.v||0))return;c.msgs.set(m.id,m);c.maxSeq=Math.max(c.maxSeq,m.seq||0);ensureUser(m.a);
   if(!old&&m.a!==A.uid&&!m.del&&Date.now()-m.t<45000){delete c.typing[m.a];notify(c,m)}
@@ -408,7 +451,7 @@ let ac;const actx=()=>{ac=ac||new (window.AudioContext||window.webkitAudioContex
 document.addEventListener('pointerdown',()=>{try{actx()}catch{}},{passive:true});
 function tone(f,d,at=0,v=.08){try{const a=actx(),o=a.createOscillator(),g=a.createGain();o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(0,a.currentTime+at);g.gain.linearRampToValueAtTime(v,a.currentTime+at+.01);g.gain.exponentialRampToValueAtTime(.0005,a.currentTime+at+d);o.connect(g).connect(a.destination);o.start(a.currentTime+at);o.stop(a.currentTime+at+d+.02)}catch{}}
 function snd(k){if(ls.get('mute',false)&&k==='msg')return;if(k==='msg'){tone(740,.12);tone(990,.14,.09)}if(k==='join'){tone(520,.12);tone(780,.16,.1)}if(k==='leave'){tone(780,.12);tone(520,.16,.1)}if(k==='ring'){tone(620,.35,0,.12);tone(780,.35,.4,.12)}}
-function notify(c,m){const cur=curConv();const visible=cur===c&&!document.hidden;if(visible)return;const men=c.dm||mentions(m);if(c.sid&&!men&&A.status==='dnd')return;if(A.status!=='dnd'&&(men||!c.sid||ls.get('notifyAll',true)))snd('msg');if(men&&A.status!=='dnd'&&'Notification'in window&&Notification.permission==='granted'&&document.hidden){try{const n=new Notification(uName(m.a,m.n),{body:(m.tx||'Вложение').slice(0,120),tag:c.id});n.onclick=()=>{focus();go(c.dm?{t:'dm',uid:c.dm}:{t:'chan',sid:c.sid,cid:c.cid});n.close()}}catch{}}}
+function notify(c,m){try{if(A.status!=='dnd'&&(c.dm||mentions(m)))window.SozvonApp?.message(uName(m.a,m.n),(m.tx||'Вложение').slice(0,120))}catch{}const cur=curConv();const visible=cur===c&&!document.hidden;if(visible)return;const men=c.dm||mentions(m);if(c.sid&&!men&&A.status==='dnd')return;if(A.status!=='dnd'&&(men||!c.sid||ls.get('notifyAll',true)))snd('msg');if(men&&A.status!=='dnd'&&'Notification'in window&&Notification.permission==='granted'&&document.hidden){try{const n=new Notification(uName(m.a,m.n),{body:(m.tx||'Вложение').slice(0,120),tag:c.id});n.onclick=()=>{focus();go(c.dm?{t:'dm',uid:c.dm}:{t:'chan',sid:c.sid,cid:c.cid});n.close()}}catch{}}}
 /* ---------- разметка ---------- */
 function md(s){const parts=[];s=E(s).replace(/```(?:\w*\n)?([\s\S]*?)```/g,(_,c)=>{parts.push(`<pre>${c}</pre>`);return`\u0001${parts.length-1}\u0002`}).replace(/`([^`\n]+)`/g,(_,c)=>{parts.push(`<code>${c}</code>`);return`\u0001${parts.length-1}\u0002`});
   s=s.replace(/https?:\/\/[^\s<&]+/g,u=>{parts.push(`<a href="${u}" target="_blank" rel="noopener noreferrer">${u}</a>`);return`\u0001${parts.length-1}\u0002`})
@@ -428,7 +471,7 @@ function msgHtml(c,m,prev){let h='';if(!prev||!sameDay(prev.t,m.t))h+=`<div clas
   const first=!prev||prev.a!==m.a||prev.sys||prev.del||m.rp||m.t-prev.t>420000||!sameDay(prev.t,m.t);const n=uName(m.a,m.n),own=m.a===A.uid;
   let rp='';if(m.rp){const o=c.msgs.get(m.rp);rp=`<div class="rp" data-act="jump" data-id="${E(m.rp)}">${ic('reply',14)}${o?`<b>${E(uName(o.a,o.n))}</b><span>${E((o.del?'удалено':o.tx||'Вложение').slice(0,90))}</span>`:'<span>Сообщение недоступно</span>'}</div>`}
   const rxs=m.rx&&typeof m.rx==='object'?Object.entries(m.rx).filter(([,l])=>Array.isArray(l)&&l.length):[];
-  return h+`<div class="m${first?' first':''}${mentions(m)&&!own?' ment':''}${m.st==='pend'?' pend':''}${m.st==='fail'?' fail':''}" data-mid="${E(m.id)}">${rp}${first?`<span data-act="prof" data-u="${E(m.a)}">${av(m.a)}</span><div class="hdr"><span class="nm" data-act="prof" data-u="${E(m.a)}">${E(n)}</span><span class="ts">${sameDay(m.t,Date.now())?'Сегодня в ':''}${fmtT(m.t)}</span>${m.pin?'<span class="ts">📌</span>':''}</div>`:`<span class="hts">${fmtT(m.t)}</span>`}${m.tx?`<div class="tx">${md(m.tx)}${m.ed?' <span class="ed">(изменено)</span>':''}</div>`:''}${attHtml(m.att)}${rxs.length?`<div class="rx">${rxs.map(([e,l])=>`<button data-act="rxT" data-id="${E(m.id)}" data-e="${E(e)}" class="${l.includes(A.uid)?'me':''}">${E(e)} ${l.length}</button>`).join('')}</div>`:''}${m.st==='fail'?`<span class="retry" data-act="retry" data-id="${E(m.id)}">Не доставлено. Повторить</span>`:''}<div class="tools"><button data-act="rxPick" data-id="${E(m.id)}" title="Реакция">${ic('smile',18)}</button><button data-act="doReply" data-id="${E(m.id)}" title="Ответить">${ic('reply',18)}</button>${own&&m.tx?`<button data-act="doEdit" data-id="${E(m.id)}" title="Изменить">${ic('edit',18)}</button>`:''}<button data-act="doPin" data-id="${E(m.id)}" title="Закрепить">${ic('pin',18)}</button>${canDel(c,m)?`<button data-act="doDel" data-id="${E(m.id)}" title="Удалить">${ic('trash',18)}</button>`:''}</div></div>`}
+  return h+`<div class="m${own?' own':''}${first?' first':''}${mentions(m)&&!own?' ment':''}${m.st==='pend'?' pend':''}${m.st==='fail'?' fail':''}" data-mid="${E(m.id)}">${rp}${first?`<span data-act="prof" data-u="${E(m.a)}">${av(m.a)}</span><div class="hdr"><span class="nm" data-act="prof" data-u="${E(m.a)}">${E(n)}</span><span class="ts">${sameDay(m.t,Date.now())?'Сегодня в ':''}${fmtT(m.t)}</span>${m.pin?'<span class="ts">📌</span>':''}</div>`:`<span class="hts">${fmtT(m.t)}</span>`}${m.tx?`<div class="tx">${md(m.tx)}${m.ed?' <span class="ed">(изменено)</span>':''}</div>`:''}${attHtml(m.att)}${rxs.length?`<div class="rx">${rxs.map(([e,l])=>`<button data-act="rxT" data-id="${E(m.id)}" data-e="${E(e)}" class="${l.includes(A.uid)?'me':''}">${E(e)} ${l.length}</button>`).join('')}</div>`:''}${m.st==='fail'?`<span class="retry" data-act="retry" data-id="${E(m.id)}">Не доставлено. Повторить</span>`:''}<div class="tools"><button data-act="rxPick" data-id="${E(m.id)}" title="Реакция">${ic('smile',18)}</button><button data-act="doReply" data-id="${E(m.id)}" title="Ответить">${ic('reply',18)}</button>${own&&m.tx?`<button data-act="doEdit" data-id="${E(m.id)}" title="Изменить">${ic('edit',18)}</button>`:''}<button data-act="doPin" data-id="${E(m.id)}" title="Закрепить">${ic('pin',18)}</button>${canDel(c,m)?`<button data-act="doDel" data-id="${E(m.id)}" title="Удалить">${ic('trash',18)}</button>`:''}</div></div>`}
 const canDel=(c,m)=>m.a===A.uid||(c.sid&&S.servers[c.sid]?.meta?.owner===A.uid);
 /* ========= отрисовка ========= */
 let rafId=0,forceBottom=false;
@@ -454,7 +497,7 @@ function renderSide(){const v=S.view;let head='',list='';
     for(const u of us){const c=S.convs['dm:'+u],r=c?unread(c):{n:0};list+=`<div class="ch${v.uid===u?' on':''}${r.n?' unread':''}" data-act="openDmA" data-u="${u}">${av(u,true)}<span class="nm">${E(uName(u))}</span>${r.n?`<span class="cnt">${r.n}</span>`:''}</div>`}
     if(!us.length)list+='<div class="emp" style="padding:20px 8px;font-size:13px">Добавьте друга, чтобы начать переписку</div>'}
   setH('#sideHead',head);setH('#sideList',list);
-  const vb=$('#voiceBar');if(call){vb.classList.remove('hidden');setH('#voiceBar',`<div style="flex:1;min-width:0"><b>${call.ok?'Голосовая связь подключена':'Подключение…'}</b><small data-act="goCall">${E(callTitle())}</small></div><button class="ib alert" data-act="hang" aria-label="Отключиться" title="Отключиться">${ic('hang',20)}</button>`)}else vb.classList.add('hidden')}
+  const vb=$('#voiceBar');if(call){vb.classList.remove('hidden');setH('#voiceBar',`<div style="flex:1;min-width:0"><b style="color:${callStatus().ok?'var(--ok)':callStatus().bad?'var(--dnd)':'var(--idle)'}">${E(callStatus().t)}</b><small data-act="goCall">${E(callTitle())}</small></div><button class="ib alert" data-act="hang" aria-label="Отключиться" title="Отключиться">${ic('hang',20)}</button>`)}else vb.classList.add('hidden')}
 const lastT=u=>{const c=S.convs['dm:'+u];let t=A.friends[u]?.last||0;if(c)for(const m of c.msgs.values())t=Math.max(t,m.t);return t};
 function setH(sel,h){const el=typeof sel==='string'?$(sel):sel;if(el._h!==h){const st=el.scrollTop;el.innerHTML=h;el._h=h;el.scrollTop=st}}
 function renderPanel(){setH('#panel',`<div id="panelU" data-act="settings">${av(A.uid,true)}<div class="t"><b>${E(myName())}</b><small>${E(STAT[A.status]||'')}</small></div></div>${call?`<button class="ib${call.mu?' alert':''}" data-act="togMic" aria-label="Микрофон">${ic(call.mu?'micoff':'mic',20)}</button><button class="ib${call.deaf?' alert':''}" data-act="togDeaf" aria-label="Звук">${ic(call.deaf?'headoff':'head',20)}</button>`:''}<button class="ib" data-act="settings" aria-label="Настройки" id="bSet">${ic('gear',20)}</button>`)}
@@ -472,7 +515,7 @@ function renderMain(){const v=S.view,home=v.t==='home',ch=chanOf(),voice=ch?.typ
   const ph=v.t==='dm'?`Написать @${uName(v.uid)}`:ch?`Написать в #${ch.name}`:'';if($('#inp').placeholder!==ph)$('#inp').placeholder=ph;markRead()}
 function friendTabs(){const v=S.view,t=(k,l)=>`<button class="tab${v.tab===k?' on':''}${k==='add'?' add':''}" data-act="ftab" data-k="${k}">${l}</button>`,n=Object.values(A.friends).filter(f=>f.state==='in').length;return t('online','В сети')+t('all','Все')+t('pend','Ожидание'+(n?` (${n})`:''))+t('add','Добавить')}
 function renderHome(){const v=S.view,fs=Object.entries(A.friends);let h=`<div class="tabs mtabs">${friendTabs()}</div>`;
-  if(v.tab==='add')h+=`<h3 style="color:var(--head);margin:18px 0 4px">Добавить в друзья</h3><p style="color:var(--mut);margin:0 0 10px">Введите имя пользователя точно, как при регистрации.</p><form id="addF" class="row"><input class="f" id="addN" placeholder="Имя пользователя" autocapitalize="none" required><button class="btn" style="flex:none">Отправить</button></form><div class="err" id="addE"></div>`;
+  if(v.tab==='add')h+=`<h3 style="color:var(--head);margin:18px 0 4px">Добавить в друзья</h3><p style="color:var(--mut);margin:0 0 10px">Введите юзернейм точно, как при регистрации.</p><form id="addF" class="row"><input class="f" id="addN" placeholder="Юзернейм" autocapitalize="none" required><button class="btn" style="flex:none">Отправить</button></form><div class="err" id="addE"></div>`;
   else{const list=fs.filter(([u,f])=>v.tab==='pend'?(f.state==='in'||f.state==='out'):f.state==='ok'&&(v.tab==='all'||status(u)!=='off'));const label={online:'В сети',all:'Все друзья',pend:'Ожидание'}[v.tab];h+=`<div class="cat" style="padding:16px 6px 8px">${label} — ${list.length}</div>`;
     for(const[u,f]of list)h+=`<div class="fr" data-act="${f.state==='ok'?'openDmA':'prof'}" data-u="${u}">${av(u,true)}<div class="t"><b>${E(uName(u))}</b><small>${f.state==='in'?'Входящая заявка':f.state==='out'?'Исходящая заявка':STAT[status(u)]}</small></div>${f.state==='in'?`<button class="ib" style="color:var(--ok)" data-act="frAcc" data-u="${u}" aria-label="Принять" title="Принять">✓</button>`:''}${f.state!=='ok'?`<button class="ib" data-act="frDel" data-u="${u}" aria-label="Отклонить" title="Отклонить">✕</button>`:`<button class="ib" data-act="callU" data-u="${u}" aria-label="Позвонить" title="Позвонить">${ic('phone',18)}</button>`}</div>`;
     if(!list.length)h+=`<div class="emp">${v.tab==='pend'?'Нет заявок':'Здесь пока никого нет. Откройте вкладку «Добавить»'}</div>`}
@@ -602,33 +645,37 @@ async function openSettings(k){const tabs={profile:'Профиль',voice:'Го�
 function liveVoice(c){const now=Date.now();return Object.entries(c.voice).filter(([u,e])=>now-(e.seen||0)<40000&&!e.gone)}
 const callTitle=()=>{if(!call)return'';const c=call.c;if(c.dm)return'Звонок: '+uName(c.dm);const s=S.servers[c.sid],ch=s?.meta?.channels.find(x=>x.id===c.cid);return`${ch?.name||''} / ${s?.meta?.name||''}`};
 async function hmacCred(user){const k=await crypto.subtle.importKey('raw',te.encode(OR_SECRET),{name:'HMAC',hash:'SHA-1'},false,['sign']);return b64(new Uint8Array(await crypto.subtle.sign('HMAC',k,te.encode(user))))}
-async function iceCfg(){const ice=[{urls:STUN}],t=ls.get('turn',{});if(t.url)ice.push({urls:t.url,username:t.user,credential:t.pass});if(!ls.get('noOR',false)){const username=String(Math.floor(Date.now()/1000)+86400),credential=await hmacCred(username);ice.push({urls:[`turn:${OR_HOST}:443`,`turn:${OR_HOST}:443?transport=tcp`,`turns:${OR_HOST}:443?transport=tcp`],username,credential})}return{iceServers:ice,iceTransportPolicy:ls.get('relay',false)?'relay':'all'}}
+async function iceCfg(){const ice=[{urls:STUN}],t=ls.get('turn',{});if(t.url)ice.push({urls:t.url,username:t.user,credential:t.pass});if(!ls.get('noOR',false)){const username=String(Math.floor(Date.now()/1000)+86400),credential=await hmacCred(username);ice.push({urls:[`turn:${OR_HOST}:443`,`turn:${OR_HOST}:443?transport=tcp`,`turns:${OR_HOST}:443?transport=tcp`],username,credential})}return{iceServers:ice,bundlePolicy:'max-bundle',rtcpMuxPolicy:'require',iceCandidatePoolSize:2,iceTransportPolicy:ls.get('relay',false)?'relay':'all'}}
 function micC(){const id=ls.get('mic',''),ns=ls.get('ns',true);return{audio:{...(id?{deviceId:{exact:id}}:{}),echoCancellation:ns,noiseSuppression:ns,autoGainControl:true}}}
 async function getMic(){try{return await navigator.mediaDevices.getUserMedia(micC())}catch(e){if(ls.get('mic','')){ls.del('mic');try{return await navigator.mediaDevices.getUserMedia(micC())}catch{}}toast('Нет доступа к микрофону. Вы подключитесь только на прослушивание',1);return null}}
 async function startCall(c,withVideo){if(call){if(call.c===c)return;await leaveCall()}if(!navigator.mediaDevices||!window.RTCPeerConnection){toast('Звонки требуют HTTPS или localhost и современный браузер',1);return}
   actx();const me=call={c,sid:rid(6),peers:{},mu:false,deaf:false,ok:false,vid:null,vidKind:null,face:'user',ice:await iceCfg(),stream:null};
   me.rtcT=T.rtc(c.h,A.uid);me.rtcCb=(t,p)=>onSignal(me,p);mux.sub(me.rtcT,me.rtcCb);
   me.stream=await getMic();if(call!==me){me.stream?.getTracks().forEach(t=>t.stop());return}if(!me.stream)me.mu=true;
-  rerender();await sleep(350);if(call!==me)return;await pushVoice();snd('join');me.hb=setInterval(()=>{pushVoice();syncPeers();watchPeers()},12000);me.spk=setInterval(speakTick,150);
+  rerender();await sleep(350);if(call!==me)return;await pushVoice();snd('join');me.hb=setInterval(()=>{pushVoice();syncPeers();watchPeers()},12000);me.spk=setInterval(speakTick,150);me.tick=setInterval(resendSignals,4000);me.tm=setInterval(()=>rerender(),1000);try{window.SozvonApp?.callState(true)}catch{}
   try{me.wake=await navigator.wakeLock?.request('screen')}catch{}
   syncPeers();if(withVideo)toggleCam();rerender();S.rendered.conv=null}
 async function pushVoice(){if(!call)return;const c=call.c;mux.pub(`${T.conv(c.h)}/v/${A.uid}`,await enc(c.key,{sid:call.sid,mu:call.mu,de:call.deaf,vi:!!call.vid,t:Date.now()}),{retain:true})}
-async function leaveCall(){const me=call;if(!me)return;call=null;stopRinging(me);clearInterval(me.hb);clearInterval(me.spk);mux.unsub(me.rtcT,me.rtcCb);for(const u of Object.keys(me.peers))closePeer(me,u);me.stream?.getTracks().forEach(t=>t.stop());me.vid?.stop();try{me.wake?.release()}catch{}const c=me.c;delete c.voice[A.uid];mux.pub(`${T.conv(c.h)}/v/${A.uid}`,'',{retain:true});snd('leave');$('#tiles').innerHTML='';S.rendered.conv=null;rerender()}
+async function leaveCall(){const me=call;if(!me)return;call=null;stopRinging(me);clearInterval(me.hb);clearInterval(me.spk);clearInterval(me.tick);clearInterval(me.tm);try{window.SozvonApp?.callState(false)}catch{}mux.unsub(me.rtcT,me.rtcCb);for(const u of Object.keys(me.peers))closePeer(me,u);me.stream?.getTracks().forEach(t=>t.stop());me.vid?.stop();try{me.wake?.release()}catch{}const c=me.c;delete c.voice[A.uid];mux.pub(`${T.conv(c.h)}/v/${A.uid}`,'',{retain:true});snd('leave');$('#tiles').innerHTML='';S.rendered.conv=null;rerender()}
 function voiceChanged(c){if(call&&call.c===c)syncPeers();rerender()}
-function syncPeers(){if(!call)return;const live=liveVoice(call.c);const want={};for(const[u,e]of live)if(u!==A.uid)want[u]=e;for(const u of Object.keys(call.peers)){const e=want[u];if(!e||e.sid!==call.peers[u].rsid){if(!e||Date.now()-(call.peers[u].created||0)>1500){closePeer(call,u);if(call.ok&&!e)snd('leave')}}}for(const[u,e]of Object.entries(want))if(!call.peers[u])makePeer(call,u,e.sid);call.ok=Object.keys(want).length===0||Object.values(call.peers).some(p=>p.pc.connectionState==='connected');if(Object.keys(want).length&&call.ringing)stopRinging(call)}
-function makePeer(me,u,rsid){const pc=new RTCPeerConnection(me.ice),p=me.peers[u]={u,rsid,pc,polite:A.uid<u,making:false,ignore:false,buf:[],stream:new MediaStream,created:Date.now(),chain:Promise.resolve(),rxChain:Promise.resolve(),st:'Соединение…'};
+function syncPeers(){if(!call)return;const c=call.c,want={};for(const[u,e]of liveVoice(c))if(u!==A.uid)want[u]=e;for(const[u,p]of Object.entries(call.peers)){const e=c.voice[u],fresh=want[u],age=Date.now()-(p.created||0);if(!e){closePeer(call,u);snd('leave')}else if(fresh&&fresh.sid!==p.rsid&&age>1500)closePeer(call,u);else if(!fresh&&p.pc.connectionState!=='connected'&&age>15000)closePeer(call,u)}for(const[u,e]of Object.entries(want))if(!call.peers[u])makePeer(call,u,e.sid);if(Object.keys(want).length&&call.ringing)stopRinging(call)}
+function resendSignals(){if(!call)return;const me=call;for(const p of Object.values(me.peers)){const pc=p.pc;if(pc.connectionState==='connected'||Date.now()-p.created>90000)continue;if(pc.signalingState==='have-local-offer'&&pc.localDescription)sig(me,p,{d:pc.localDescription});else if(p.polite&&!pc.remoteDescription)sig(me,p,{hi:1});else if(p.polite&&pc.signalingState==='stable'&&pc.localDescription)sig(me,p,{d:pc.localDescription});for(const c of p.sent)sig(me,p,{c})}}
+function callStatus(){const me=call;if(!me)return{t:''};const ps=Object.values(me.peers);if(ps.some(p=>p.pc.connectionState==='connected')){me.connAt=me.connAt||Date.now();const n=Math.floor((Date.now()-me.connAt)/1000);return{t:`Соединено · ${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`,ok:true}}me.connAt=0;if(me.ringing)return{t:`Вызов: ${uName(me.c.dm)}…`};if(ps.length){const age=Date.now()-Math.min(...ps.map(p=>p.created));return age>25000?{t:'Не удаётся соединиться: сеть блокирует звонок',bad:true}:{t:'Подключаем звук…'}}return{t:me.c.dm?'Ждём собеседника…':'В канале пока только вы'}}
+function makePeer(me,u,rsid){const pc=new RTCPeerConnection(me.ice),p=me.peers[u]={u,rsid,pc,polite:A.uid<u,making:false,ignore:false,buf:[],sent:[],stream:new MediaStream,created:Date.now(),chain:Promise.resolve(),rxChain:Promise.resolve(),st:'Соединение…'};
   if(me.stream)me.stream.getAudioTracks().forEach(t=>pc.addTrack(t,me.stream));else pc.addTransceiver('audio',{direction:'recvonly'});if(me.vid)pc.addTrack(me.vid);
   const aud=document.createElement('audio');aud.autoplay=true;aud.playsInline=true;aud.muted=me.deaf;aud.dataset.u=u;$('#audioBox').append(aud);p.aud=aud;applyOut();
   pc.ontrack=e=>{const tr=e.track;if(tr.kind==='video')p.stream.getVideoTracks().forEach(x=>p.stream.removeTrack(x));p.stream.addTrack(tr);if(tr.kind==='audio'){aud.srcObject=p.stream;aud.play().catch(()=>{});hookAn(p)}tr.onunmute=()=>rerender();rerender()};
   pc.onnegotiationneeded=async()=>{if(p.polite&&!pc.remoteDescription)return;try{p.making=true;await pc.setLocalDescription();sig(me,p,{d:pc.localDescription})}catch(e){console.warn(e)}finally{p.making=false}};
-  pc.onicecandidate=({candidate})=>{if(candidate)sig(me,p,{c:candidate})};
-  pc.onconnectionstatechange=()=>{const s=pc.connectionState;p.st=s==='connected'?'':s==='failed'?'Нет связи':s==='disconnected'?'Связь прервалась…':'Соединение…';if(s==='connected'){me.ok=true;p.okAt=Date.now();snd('join')}if(s==='failed'){try{pc.restartIce()}catch{}if(!me.warned&&Date.now()-p.created>15000){me.warned=true;toast('Не удаётся соединить звонок: сеть режет трафик. Нужен свой TURN-сервер (Настройки → Соединение)',1)}}rerender()};
+  pc.onicecandidate=({candidate})=>{if(candidate){p.sent.push(candidate);sig(me,p,{c:candidate})}};if(p.polite)sig(me,p,{hi:1});
+  pc.onconnectionstatechange=()=>{const s=pc.connectionState;clearTimeout(p.dcT);if(s==='disconnected')p.dcT=setTimeout(()=>{if(pc.connectionState==='disconnected'&&!p.polite){try{pc.restartIce()}catch{}}},2500);if(s==='connected')tuneSenders(p);p.st=s==='connected'?'':s==='failed'?'Нет связи':s==='disconnected'?'Связь прервалась…':'Соединение…';if(s==='connected'){me.ok=true;p.okAt=Date.now();snd('join')}if(s==='failed'){try{pc.restartIce()}catch{}if(!me.warned&&Date.now()-p.created>15000){me.warned=true;toast('Не удаётся соединить звонок: сеть режет трафик. Нужен свой TURN-сервер (Настройки → Соединение)',1)}}rerender()};
   rerender();return p}
 function watchPeers(){if(!call)return;for(const p of Object.values(call.peers)){const s=p.pc.connectionState;if(s!=='connected'&&Date.now()-p.created>12000&&!p.polite&&Date.now()-(p.rst||0)>12000){p.rst=Date.now();try{p.pc.restartIce()}catch{}}if(s!=='connected'&&Date.now()-p.created>30000&&!call.warned){call.warned=true;toast('Не удаётся соединить звонок: сеть режет трафик. Нужен свой TURN-сервер (Настройки → Соединение)',1)}}}
+async function tuneSenders(p){for(const s of p.pc.getSenders()){if(!s.track)continue;try{const pr=s.getParameters();pr.encodings=pr.encodings&&pr.encodings.length?pr.encodings:[{}];if(s.track.kind==='audio'){pr.encodings[0].maxBitrate=40000;pr.encodings[0].priority='high';pr.encodings[0].networkPriority='high'}else{pr.encodings[0].maxBitrate=call&&call.vidKind==='scr'?900000:500000;pr.degradationPreference='maintain-framerate'}await s.setParameters(pr)}catch{}}}
+function fecSdp(d){if(!d||!d.sdp)return d;const m=/a=rtpmap:(\d+) opus\/48000/i.exec(d.sdp);if(!m)return d;const pt=m[1];let sdp=d.sdp.replace(new RegExp('a=fmtp:'+pt+' ([^\r\n]*)'),(x,f)=>'a=fmtp:'+pt+' '+f.split(';').filter(k=>!/^(useinbandfec|usedtx|maxaveragebitrate)=/.test(k)).concat(['useinbandfec=1','usedtx=0','maxaveragebitrate=40000']).join(';'));return{type:d.type,sdp}}
 function closePeer(me,u){const p=me.peers[u];if(!p)return;delete me.peers[u];try{p.pc.close()}catch{}p.aud?.remove();try{p.an?.src.disconnect()}catch{}$(`.tile[data-u="${u}"]`)?.remove()}
-function sig(me,p,o){p.chain=p.chain.then(async()=>{const c=me.c;const pl=await enc(c.key,{...o,from:A.uid,sid:me.sid,to:p.rsid}),t=T.rtc(c.h,p.u);if(!await mux.pub(t,pl)){await sleep(1000);await mux.pub(t,pl)}}).catch(()=>{})}
-async function onSignal(me,raw){if(call!==me||!raw)return;const o=await dec(me.c.key,raw);if(!o||o.from===A.uid||(o.to&&o.to!==me.sid))return;let p=me.peers[o.from];if(p&&p.rsid!==o.sid){closePeer(me,o.from);p=null}if(!p)p=makePeer(me,o.from,o.sid);const pc=p.pc;
-  try{if(o.d){const coll=o.d.type==='offer'&&(p.making||pc.signalingState!=='stable');p.ignore=!p.polite&&coll;if(p.ignore)return;await pc.setRemoteDescription(o.d);for(const c of p.buf.splice(0))await pc.addIceCandidate(c).catch(()=>{});if(o.d.type==='offer'){await pc.setLocalDescription();sig(me,p,{d:pc.localDescription})}}
+function sig(me,p,o){if(o.d)o={...o,d:fecSdp(o.d.toJSON?o.d.toJSON():o.d)};p.chain=p.chain.then(async()=>{const c=me.c;const pl=await enc(c.key,{...o,from:A.uid,sid:me.sid,to:p.rsid}),t=T.rtc(c.h,p.u);if(!await mux.pub(t,pl)){await sleep(1000);await mux.pub(t,pl)}}).catch(()=>{})}
+async function onSignal(me,raw){if(call!==me||!raw)return;const o=await dec(me.c.key,raw);if(!o||o.from===A.uid||(o.to&&o.to!==me.sid))return;let p=me.peers[o.from];if(p&&p.rsid!==o.sid){closePeer(me,o.from);p=null}if(!p)p=makePeer(me,o.from,o.sid);const pc=p.pc;if(o.hi)return;
+  try{if(o.d){if(o.d.type==='answer'&&pc.signalingState!=='have-local-offer')return;const coll=o.d.type==='offer'&&(p.making||pc.signalingState!=='stable');p.ignore=!p.polite&&coll;if(p.ignore)return;await pc.setRemoteDescription(o.d);for(const c of p.buf.splice(0))await pc.addIceCandidate(c).catch(()=>{});if(o.d.type==='offer'){await pc.setLocalDescription();sig(me,p,{d:pc.localDescription})}}
     else if(o.c){if(!pc.remoteDescription)p.buf.push(o.c);else await pc.addIceCandidate(o.c).catch(e=>{if(!p.ignore)console.warn(e)})}}catch(e){console.warn('rtc',e)}}
 function applyOut(){const id=ls.get('out','');document.querySelectorAll('#audioBox audio').forEach(a=>{if(a.setSinkId)a.setSinkId(id).catch(()=>{})})}
 function setMute(v){if(!call)return;if(!call.stream&&!v){swapMic();}call.mu=v;call.stream?.getAudioTracks().forEach(t=>t.enabled=!v);pushVoice();rerender()}
@@ -643,10 +690,10 @@ function level(a){if(!a)return 0;a.an.getByteTimeDomainData(a.buf);let m=0;for(c
 function speakTick(){if(!call)return;const me=call;if(me.stream&&!me.selfAn){try{const a=actx(),src=a.createMediaStreamSource(me.stream),an=a.createAnalyser();an.fftSize=256;src.connect(an);me.selfAn={src,an,buf:new Uint8Array(128)}}catch{}}$(`.tile[data-u="${A.uid}"]`)?.classList.toggle('speaking',!me.mu&&level(me.selfAn)>10);for(const p of Object.values(me.peers))$(`.tile[data-u="${p.u}"]`)?.classList.toggle('speaking',level(p.an)>10)}
 function tileFor(u){let t=$(`.tile[data-u="${u}"]`);if(!t){t=document.createElement('div');t.className='tile';t.dataset.u=u;t.dataset.act='tile';t.innerHTML='<span class="avw"></span><video playsinline autoplay muted class="hidden"></video><span class="st hidden"></span><span class="lab"></span>';$('#tiles').append(t)}return t}
 function paintTile(u,stream,showVid,st,mu,self,scr){const t=tileFor(u),v=t.querySelector('video');t.classList.toggle('self',!!self);setH(t.querySelector('.avw'),av(u));setH(t.querySelector('.lab'),`${mu?ic('micoff',14):''}${E(uName(u))}${self?' (вы)':''}`);if(showVid&&stream){if(v.srcObject!==stream)v.srcObject=stream;v.classList.remove('hidden');v.classList.toggle('cam',!scr);v.play?.().catch(()=>{})}else{v.classList.add('hidden');if(v.srcObject)v.srcObject=null}const s=t.querySelector('.st');s.textContent=st||'';s.classList.toggle('hidden',!st)}
-function renderStage(){const c=curConv(),st=$('#stage'),show=call&&c&&call.c===c;st.classList.toggle('hidden',!show);if(!show)return;const voice=chanOf()?.type==='voice';st.classList.toggle('full',!!voice);const me=call;
+function renderStage(){const c=curConv(),st=$('#stage'),show=call&&c&&call.c===c;st.classList.toggle('hidden',!show);if(!show)return;const voice=chanOf()?.type==='voice';st.classList.toggle('full',!!voice);const me=call,cs=callStatus(),cl=$('#callSt');cl.textContent=cs.t;cl.className=cs.ok?'ok':cs.bad?'bad':'';
   if(me.vid&&(!me.lvs||me.lvs.getVideoTracks()[0]!==me.vid))me.lvs=new MediaStream([me.vid]);paintTile(A.uid,me.lvs,!!me.vid,'',me.mu,true,me.vidKind==='scr');
   for(const[u,p]of Object.entries(me.peers)){const e=c.voice[u]||{},vt=p.stream.getVideoTracks()[0];paintTile(u,p.stream,!!(e.vi&&vt&&vt.readyState==='live'),p.st,e.mu)}
-  document.querySelectorAll('.tile').forEach(t=>{if(t.dataset.u!==A.uid&&!me.peers[t.dataset.u])t.remove()});
+  const wait=c.dm&&!me.peers[c.dm]?c.dm:null;if(wait)paintTile(wait,null,false,me.ringing?'Вызов…':'Ожидание');document.querySelectorAll('.tile').forEach(t=>{if(t.dataset.u!==A.uid&&t.dataset.u!==wait&&!me.peers[t.dataset.u])t.remove()});
   const b=(a,i,cl,l,id='')=>`<button class="cb ${cl}" data-act="${a}" aria-label="${l}" title="${l}"${id?` id="${id}"`:''}>${ic(i,22)}</button>`;
   setH('#ctl',b('togMic',me.mu?'micoff':'mic',me.mu?'off':'','Микрофон','bMic')+b('togDeaf',me.deaf?'headoff':'head',me.deaf?'off':'','Звук')+b('togCam','cam',me.vidKind==='cam'?'on':'','Камера','bCam')+(me.vidKind==='cam'&&matchMedia('(pointer:coarse)').matches?b('flip','flip','','Сменить камеру'):'')+(navigator.mediaDevices?.getDisplayMedia?b('togScr','screen',me.vidKind==='scr'?'on':'','Показ экрана','bScr'):'')+b('hang','hang','end','Завершить','bHang'))}
 /* ---------- проверка связи ---------- */
@@ -658,16 +705,18 @@ async function testBroker(url){const topic=NS+'/dbg/'+rid(8),got={};const stub={
 async function iceDiag(){const pc=new RTCPeerConnection(await iceCfg()),n={host:0,srflx:0,relay:0};pc.createDataChannel('t');await new Promise(res=>{const to=setTimeout(res,9000);pc.onicecandidate=e=>{if(!e.candidate){clearTimeout(to);res();return}const m=/ typ (\w+)/.exec(e.candidate.candidate);if(m&&m[1]in n)n[m[1]]++};pc.createOffer().then(o=>pc.setLocalDescription(o)).catch(res)});pc.close();return`Звонки: локальных ${n.host}, STUN ${n.srflx}, TURN ${n.relay}${n.srflx?'':' — ✗ STUN недоступен'}${n.relay?'':' — ✗ TURN недоступен'}`}
 async function netDiag(){const rows=await Promise.all(brokers().map(u=>testBroker(u).catch(e=>u+': ошибка '+e.message)));const ok=rows.filter(r=>r.includes('✓')).length,ice=window.RTCPeerConnection?await iceDiag():'Звонки: браузер не поддерживает';return`Рабочих серверов: ${ok} из ${rows.length}\n${rows.join('\n')}\n${ice}\n${navigator.onLine?'':'Устройство офлайн\n'}`}
 /* ---------- вызовы в ЛС ---------- */
-async function callUser(u,video){const f=A.friends[u];if(!f||!S.convs['dm:'+u])await openDm(u);else go({t:'dm',uid:u});const c=S.convs['dm:'+u];if(!c)return;if(call&&call.c===c)return;await startCall(c,video);if(!call||call.c!==c)return;sendMsg(c,{sys:'начал(а) звонок'});if(liveVoice(c).some(([x])=>x!==A.uid))return;const me=call;me.ringing=true;me.ringId=rid(6);const t0=Date.now(),ring=async()=>{if(!me.ringing||call!==me)return;if(Date.now()-t0>45000){toast('Нет ответа');leaveCall();return}mux.pub(T.conv(c.h)+'/ring',await enc(c.key,{from:A.uid,id:me.ringId,act:'ring',t:Date.now()}),{qos:0});snd('ring')};ring();me.ringT=setInterval(ring,2500)}
-function stopRinging(me){if(!me.ringing)return;me.ringing=false;clearInterval(me.ringT);const c=me.c;enc(c.key,{from:A.uid,id:me.ringId,act:'cancel',t:Date.now()}).then(p=>mux.pub(T.conv(c.h)+'/ring',p,{qos:0}))}
-let inc=null;
-function onRing(c,o){if(!c.dm||o.from!==c.dm)return;if(o.act==='decline'&&call&&call.c===c&&call.ringing){toast('Вызов отклонён');leaveCall();return}if(Date.now()-o.t>20000)return;if(o.act==='cancel'){if(inc&&inc.id===o.id)ringClose();return}if(o.act!=='ring'||(call&&call.c===c)||A.friends[c.dm]?.state==='blocked'||(inc&&inc.dead===o.id))return;
-  if(inc&&inc.id===o.id){inc.seen=Date.now();if(A.status!=='dnd')snd('ring');return}if(call)return;inc={id:o.id,c,seen:Date.now()};ensureUser(c.dm);
-  $('#ringBox').innerHTML=`<div id="ring" role="alertdialog"><div class="card">${av(c.dm)}<h1>${E(uName(c.dm))}</h1><p class="s">Входящий звонок…</p><div class="row" style="justify-content:center;gap:20px"><button class="cb off" style="width:60px;height:60px" data-act="ringNo" aria-label="Отклонить" id="bNo">${ic('hang',26)}</button><button class="cb" style="background:var(--ok);width:60px;height:60px" data-act="ringOk" aria-label="Ответить" id="bYes">${ic('phone',26)}</button></div></div></div>`;
-  if(document.hidden&&'Notification'in window&&Notification.permission==='granted')try{new Notification('Входящий звонок',{body:uName(c.dm),tag:'call'})}catch{}
-  inc.t=setInterval(()=>{if(inc&&Date.now()-inc.seen>7000)ringClose()},1500)}
-function ringClose(){if(!inc)return;clearInterval(inc.t);inc=null;$('#ringBox').innerHTML=''}
-async function answerRing(ok){if(!inc)return;const{c,id}=inc;ringClose();if(ok){go({t:'dm',uid:c.dm});await startCall(c)}else{mux.pub(T.conv(c.h)+'/ring',await enc(c.key,{from:A.uid,id,act:'decline',t:Date.now()}),{qos:0})}}
+async function callUser(u,video){const f=A.friends[u];if(!f||!S.convs['dm:'+u])await openDm(u);else go({t:'dm',uid:u});const c=S.convs['dm:'+u];if(!c)return;if(call&&call.c===c)return;await startCall(c,video);if(!call||call.c!==c)return;sendMsg(c,{sys:'начал(а) звонок'});if(liveVoice(c).some(([x])=>x!==A.uid))return;const me=call;me.ringing=true;me.ringId=rid(6);const t0=Date.now(),ring=async()=>{if(!me.ringing||call!==me)return;if(Date.now()-t0>45000){toast('Нет ответа');leaveCall();return}mux.pub(T.conv(c.h)+'/ring',await enc(c.key,{from:A.uid,id:me.ringId,act:'ring',t:Date.now()}),{retain:true});snd('ring')};ring();me.ringT=setInterval(ring,2500)}
+function stopRinging(me){if(!me.ringing)return;me.ringing=false;clearInterval(me.ringT);const c=me.c;enc(c.key,{from:A.uid,id:me.ringId,act:'cancel',t:Date.now()}).then(p=>mux.pub(T.conv(c.h)+'/ring',p)).finally(()=>mux.pub(T.conv(c.h)+'/ring','',{retain:true}))}
+let inc=null;const doneRings=new Set;
+function onRing(c,o,ret){if(!c.dm||o.from!==c.dm)return;if((o.act==='decline'||o.act==='busy')&&call&&call.c===c&&call.ringing){toast(o.act==='busy'?'Собеседник сейчас на другом звонке':'Вызов отклонён');leaveCall();return}if(o.act==='cancel'){doneRings.add(o.id);if(inc&&inc.id===o.id)ringClose();return}if(o.act!=='ring'||(ret&&Math.abs(Date.now()-o.t)>45000)||(call&&call.c===c)||doneRings.has(o.id)||A.friends[c.dm]?.state==='blocked')return;
+  if(call){doneRings.add(o.id);enc(c.key,{from:A.uid,id:o.id,act:'busy',t:Date.now()}).then(p=>mux.pub(T.conv(c.h)+'/ring',p));return}
+  if(inc&&inc.id===o.id){inc.seen=Date.now();if(A.status!=='dnd'){snd('ring');navigator.vibrate?.([400,200,400])}try{window.SozvonApp?.incomingCall(uName(c.dm))}catch{}return}if(inc)return;inc={id:o.id,c,seen:Date.now()};ensureUser(c.dm);if(A.status!=='dnd'){snd('ring');navigator.vibrate?.([400,200,400])}
+  $('#ringBox').innerHTML=`<div id="ring" role="alertdialog"><div class="card">${av(c.dm)}<h1>${E(uName(c.dm))}</h1><p class="s">Входящий звонок…</p><div class="row" style="justify-content:center;gap:32px"><div><button class="cb off" style="width:64px;height:64px;margin:auto" data-act="ringNo" aria-label="Сбросить" id="bNo">${ic('hang',28)}</button><small style="display:block;margin-top:6px;color:var(--mut)">Сбросить</small></div><div><button class="cb" style="background:var(--ok);width:64px;height:64px;margin:auto" data-act="ringOk" aria-label="Принять" id="bYes">${ic('phone',28)}</button><small style="display:block;margin-top:6px;color:var(--mut)">Принять</small></div></div></div></div>`;
+  try{window.SozvonApp?.incomingCall(uName(c.dm))}catch{}
+  if(!window.SozvonApp&&document.hidden&&'Notification'in window&&Notification.permission==='granted')try{new Notification('Входящий звонок',{body:uName(c.dm),tag:'call'})}catch{}
+  inc.t=setInterval(()=>{if(inc&&Date.now()-inc.seen>12000)ringClose()},1500)}
+function ringClose(){if(!inc)return;clearInterval(inc.t);inc=null;$('#ringBox').innerHTML='';try{window.SozvonApp?.callEnded()}catch{}}
+async function answerRing(ok){if(!inc)return;const{c,id}=inc;doneRings.add(id);ringClose();if(ok){go({t:'dm',uid:c.dm});await startCall(c)}else{mux.pub(T.conv(c.h)+'/ring',await enc(c.key,{from:A.uid,id,act:'decline',t:Date.now()}))}}
 /* ========= события ========= */
 document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(el){const fn=ACT[el.dataset.act];if(fn){if(el.tagName==='A')e.preventDefault();fn(el.dataset,el,e)}}else if(e.target.id==='ov')closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#viewer')?.remove();$('.tile.focus')?.classList.remove('focus');if(!$('#ov').classList.contains('hidden'))closeModal()}});
@@ -681,11 +730,11 @@ document.addEventListener('dragover',e=>e.preventDefault());document.addEventLis
 $('#msgs').addEventListener('scroll',()=>{},{passive:true});
 $('#msgs').addEventListener('load',e=>{if(e.target.tagName==='IMG'){const b=$('#msgs');if(b.scrollHeight-b.scrollTop-b.clientHeight<400)b.scrollTop=b.scrollHeight}},true);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&A){markRead();sendPresence();mux.wake()}});
-addEventListener('online',()=>mux.wake());
+addEventListener('online',()=>{mux.wake();if(call)for(const p of Object.values(call.peers))if(!p.polite)try{p.pc.restartIce()}catch{}});
 addEventListener('pagehide',()=>{if(A){if(call){const c=call.c;mux.conns.forEach(x=>x.publish(`${T.conv(c.h)}/v/${A.uid}`,'',0,true))}mux.conns.forEach(x=>x.publish(T.pres(A.uid),JSON.stringify({s:'off',t:Date.now()}),0,true))}});
 /* ========= запуск ========= */
 const willMsg=()=>A?{topic:T.pres(A.uid),payload:JSON.stringify({s:'off',t:0,w:1})}:null;
-function connUI(up,n){const el=$('#conn');if(!A){$('#aC').textContent=up?`Сеть: подключено серверов ${up} из ${n}`:'Сеть: подключение…';return}if(up){el.classList.add('hidden');if(connUI.lost){connUI.lost=false;sendPresence();pushProfile();if(call)pushVoice();retryFails()}}else{el.classList.remove('hidden');connUI.lost=true;el.textContent='Нет соединения. Подключаемся…'}}
+function connUI(up,n){const el=$('#conn');if(!A){$('#aC').textContent=up?`Сеть: подключено серверов ${up} из ${n}`:'Сеть: подключение…';return}if(up){el.classList.add('hidden');if(connUI.lost){connUI.lost=false;sendPresence();pushProfile();if(call){pushVoice();for(const p of Object.values(call.peers))if(p.pc.connectionState!=='connected'&&!p.polite)try{p.pc.restartIce()}catch{}}retryFails()}}else{el.classList.remove('hidden');connUI.lost=true;el.textContent='Нет соединения. Подключаемся…'}}
 async function enterApp(){$('#auth').classList.add('hidden');$('#app').classList.remove('hidden');document.documentElement.dataset.theme=ls.get('theme','dark');
   $('#bAtt').innerHTML=ic('clip',22);$('#bEmo').innerHTML=ic('smile',22);$('#bRec').innerHTML=ic('mic',22);$('#bSend').innerHTML=ic('send',22);autoH();
   mux.start(willMsg());A.friends=A.friends||{};A.reads=A.reads||{};
@@ -700,13 +749,13 @@ async function syncAll(){for(const e of A.servers)await attachServer(e);for(cons
 function fmtPhone(v){let d=v.replace(/\D/g,'');if(!d)return'';if(d[0]==='8')d='7'+d.slice(1);else if(d[0]==='9')d='7'+d;if(d[0]!=='7')return'+'+d.slice(0,15);d=d.slice(0,11);let o='+7';if(d.length>1)o+=' '+d.slice(1,4);if(d.length>4)o+=' '+d.slice(4,7);if(d.length>7)o+='-'+d.slice(7,9);if(d.length>9)o+='-'+d.slice(9,11);return o}
 $('#aPh').addEventListener('input',e=>{const el=e.target;if(el.selectionStart<el.value.length)return;el.value=fmtPhone(el.value)});
 let regMode=false;
-function setMode(r){regMode=r;$('#aT').textContent=r?'Создать аккаунт':'С возвращением!';$('#aS').textContent=r?'Имя будет вашим логином':'Рады видеть вас снова';$('#aB').textContent=r?'Продолжить':'Вход';$('#aQ').textContent=r?'Уже есть аккаунт?':'Нет аккаунта?';$('#aL').textContent=r?'Войти':'Зарегистрироваться';$('#aE').textContent='';$('#aP').autocomplete=r?'new-password':'current-password'}
+function setMode(r){regMode=r;$('#aT').textContent=r?'Создать аккаунт':'С возвращением!';$('#aS').textContent=r?'Имя будет вашим логином':'Рады видеть вас снова';$('#aB').textContent=r?'Продолжить':'Вход';$('#aQ').textContent=r?'Уже есть аккаунт?':'Нет аккаунта?';$('#aL').textContent=r?'Войти':'Зарегистрироваться';$('#aE').textContent='';$('#aP').autocomplete=r?'new-password':'current-password';$('#aUl').textContent=r?'Юзернейм (от 5 символов)':'Юзернейм';$('#aU').minLength=r?5:2}
 $('#aL').onclick=e=>{e.preventDefault();setMode(!regMode)};
-$('#authF').onsubmit=async e=>{e.preventDefault();const n=$('#aU').value.trim(),p=$('#aP').value;if(!/^[\wа-яё._-]{2,32}$/i.test(n)){$('#aE').textContent='Имя: 2–32 символа, буквы, цифры, . _ -';return}const ph=normPhone($('#aPh').value);if(!ph){$('#aE').textContent='Введите номер полностью, например +7 900 000-00-00';return}const b=$('#aB');b.disabled=true;$('#aE').textContent='';try{if(regMode)await register(n,p,ph);else await login(n,p,ph);enterApp()}catch(x){A=null;$('#aE').textContent=x.message||'Ошибка'}b.disabled=false};
+$('#authF').onsubmit=async e=>{e.preventDefault();const n=$('#aU').value.trim(),p=$('#aP').value;if(!/^[\wа-яё._-]{2,32}$/i.test(n)||(regMode&&n.length<5)){$('#aE').textContent=regMode?'Юзернейм: от 5 до 32 символов, буквы, цифры, . _ -':'Юзернейм: буквы, цифры, . _ -';return}if(p.length<6){$('#aE').textContent='Пароль: не меньше 6 символов';return}const ph=normPhone($('#aPh').value);if(!ph){$('#aE').textContent='Введите номер полностью, например +7 900 000-00-00';return}const b=$('#aB');b.disabled=true;$('#aE').textContent='';try{if(regMode)await register(n,p,ph);else await login(n,p,ph);enterApp()}catch(x){A=null;$('#aE').textContent=x.message||'Ошибка'}b.disabled=false};
 mux.onstate=connUI;
 (async()=>{document.documentElement.dataset.theme=ls.get('theme','dark');
   if(!crypto.subtle){$('#aE').textContent='Откройте приложение через HTTPS: без него браузер не даёт шифрование и звонки.';return}
-  const m=document.createElement('link');m.rel='manifest';m.href='data:application/manifest+json,'+encodeURIComponent(JSON.stringify({name:'Созвон',short_name:'Созвон',display:'standalone',background_color:'#1e1f22',theme_color:'#1e1f22',start_url:location.pathname,icons:[]}));document.head.append(m);
+  const m=document.createElement('link');m.rel='manifest';m.href='data:application/manifest+json,'+encodeURIComponent(JSON.stringify({name:'Созвон',short_name:'Созвон',display:'standalone',background_color:'#000000',theme_color:'#000000',start_url:location.pathname,icons:[]}));document.head.append(m);
   const ses=ls.get('session');if(ses&&ses.acc){const raw=ub64(ses.k);AK={raw,key:await aes(raw)};A=ses.acc;enterApp()}else mux.start(null)})();
 </script>
 </body>
